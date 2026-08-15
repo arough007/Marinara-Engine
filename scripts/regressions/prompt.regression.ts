@@ -6988,6 +6988,19 @@ Use HTML sparingly and diegetically. Do not replace normal prose/dialogue unless
         );
       }
 
+      const naturalPortraitDoesNotCompact = compileImagePrompt({
+        kind: "portrait",
+        prompt: [
+          ...Array.from({ length: 40 }, (_, index) => `blue eyes detail ${index}`),
+          "A realistic portrait with soft evening light and a clear face.",
+        ].join(", "),
+        styleProfiles,
+        styleProfileId: "realistic",
+        generatedStyle: "ornate rococo oil painting",
+      });
+      assert.match(naturalPortraitDoesNotCompact.prompt, /soft evening light/i);
+      assert.doesNotMatch(naturalPortraitDoesNotCompact.prompt, /blue eyes detail 0/i);
+
       const semicolonNegation = compileImagePrompt({
         kind: "portrait",
         prompt: "Centered portrait; avoid ornate rococo oil painting",
